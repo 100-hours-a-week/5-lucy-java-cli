@@ -24,8 +24,8 @@ public class PlayMethod{
                     SelectMethod();
                     break;
                 case "N","n" :
-                    // 인트로화면으로 돌아가기
-                    MusicPlayer.showIntro();
+                    // 종료화면으로 돌아가기
+                    MusicPlayer.showEnd();
                     break;
                 default:
                     System.out.println("Y 또는 N을 입력해주세요.");
