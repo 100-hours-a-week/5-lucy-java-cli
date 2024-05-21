@@ -1,12 +1,9 @@
 package com.player;
-
-import java.util.Arrays;
 import java.util.Set;
 import java.util.HashSet;
-import java.util.List;
 
-public class PlayList {
-    public PlayList() {}
+public class SongList{
+    public SongList() {}
     // 배열 선언
     // 1. 클래스명 배열명 [] = new 클래스명 [배열 크기];
     // 2. 선언과 동시에 할당 및 초기화
@@ -25,30 +22,4 @@ public class PlayList {
             new Song(9, "루시", "Boogie Man", "가사9"),
             new Song(10, "데이식스", "좋아합니다", "가사10"),
     };
-
-    public void showPlayList (){
-    for (int i = 0; i < playList.length; i++){
-        System.out.print(playList[i].getId());
-        System.out.print(". ");
-        System.out.print(playList[i].getArtist());
-        System.out.print(" - ");
-        System.out.println(playList[i].getTitle());
-    }
-
-//    List <Song> list = Arrays.asList(playList);
-//        System.out.println(list.get(0).getTitle());
-}
-
-    public void showArtists (){
-        // 중복 제거를 위한 Set 생성
-        Set <String> uniqueArtists = new HashSet<>();
-        // playList 배열에서 가수 정보만 추출해서 Set에 저장하기
-        for (Song artist : playList ){
-            uniqueArtists.add(artist.getArtist());
-        }
-        //
-        for (String artist : uniqueArtists){
-            System.out.println(artist);
-        }
-        }
 }

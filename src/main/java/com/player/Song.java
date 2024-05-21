@@ -7,11 +7,7 @@ public class Song {
     private String title;
     private String lyrics;
 
-    // 기본 생성자
-//    public Song(){
-//    };
-
-    // 매개변수 있는 생성자
+    // 생성자
     public Song(int id, String artist, String title, String lyrics) {
         this.id = id;
         this.artist = artist;
