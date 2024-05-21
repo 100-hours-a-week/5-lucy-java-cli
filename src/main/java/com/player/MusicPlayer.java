@@ -5,10 +5,10 @@ public class MusicPlayer {
     // static : 객체 없이 호출 가능
     public static void showIntro () {
         Scanner in = new Scanner(System.in);
-        System.out.println(" --------------------------------");
-        System.out.println("ㅣ   Lucy's Music Player 입니다   ㅣ");
-        System.out.println("ㅣ   노래를 재생하시겠습니까? (Y/N)    ㅣ");
-        System.out.println(" --------------------------------");
+        System.out.println("==================================");
+        System.out.println("ㅣㅣ   Lucy's Play Maker 입니다 ㅣㅣ");
+        System.out.println("ㅣㅣ  리스트를 생성하시겠습니까? (Y/N) ㅣㅣ");
+        System.out.println(" =================================");
         System.out.print("입력 : ");
         // 사용자의 입력을 받음
         String answer = in.next();
@@ -25,9 +25,9 @@ public class MusicPlayer {
         }}
 
     public static void showEnd() {
-            System.out.println(" ----------------------------------");
-            System.out.println("ㅣ Lucy's Music Player를 종료합니다.  ㅣ");
-            System.out.println("ㅣ       이용해주셔서 감사합니다         ㅣ");
-            System.out.println(" ----------------------------------");
+            System.out.println("==================================");
+            System.out.println("ㅣㅣLucy's Play Maker를 종료합니다.ㅣㅣ");
+            System.out.println("ㅣㅣ      이용해주셔서 감사합니다       ㅣㅣ");
+            System.out.println("==================================");
     }
     }

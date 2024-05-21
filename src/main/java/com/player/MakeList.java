@@ -6,46 +6,55 @@ package com.player;
 // 4. 가수 노래 리스트
 
 import java.util.*;
+import java.util.stream.Collectors;
 
+// playList 를 사용하기 위해 상속
 public class MakeList extends SongList {
+    // 중복 없이 가수정보를 담을 Set 자료구조 생성
+    protected Set<String> uniqueArtists = new HashSet<>();
+    // 플레이리스트를 담을 빈 리스트 생성
+    protected List<String> newPlayList = new ArrayList<>();
+
     public MakeList() {
     }
 
-    public void showPlayListAll (){
-        for (int i = 0; i < playList.length; i++){
-            System.out.print(playList[i].getId());
-            System.out.print(". ");
-            System.out.print(playList[i].getArtist());
-            System.out.print(" - ");
-            System.out.println(playList[i].getTitle());
+    // 플레이리스트 출력
+    public void showPlayList(){
+        for (String song : newPlayList) {
+            System.out.println(song);
         }
     }
 
-    public void showPlayListRandom(){
-        // Collection.shuffle 을 사용하기 위해서 List 로 변환
-        // playList 배열을 playLists 리스트로 생성
+    public void makePlayListAll (){
+        // newPlayList 에 전곡 담기
+        newPlayList = Arrays.stream(playList)
+                .map(song -> song.getId() + ". " + song.getArtist() + " - " + song.getTitle())
+                .collect(Collectors.toList());
+        // newPlayList 출력
+        showPlayList();
+    }
+
+    public void makePlayListRandom(){
+
+        // Collection.shuffle 을 사용하기 위해서 새 List 생성
         List<Song> playLists = new ArrayList<>(Arrays.asList(playList));
         Collections.shuffle(playLists);
 
-        for (int i = 0; i < 5; i++ ){
-            // playLists 리스트에서 i번째 객체를 가져와 song 변수에 저장
-            Song song = playLists.get(i);
-            System.out.print(i+1);
-            System.out.print(". ");
-            System.out.print(song.getArtist());
-            System.out.print(" - ");
-            System.out.println(song.getTitle());
-        }
+        newPlayList = playLists.stream()
+                .limit(5)
+                .map(song -> song.getId() + ". " + song.getArtist() + " - " + song.getTitle())
+                .collect(Collectors.toList());
+
+        showPlayList();
     }
 
+    // 가수 리스트 생성하기
     public void showArtists (){
-        // 중복 제거를 위한 Set 생성
-        Set<String> uniqueArtists = new HashSet<>();
         // playList 배열에서 가수 정보만 추출해서 Set에 저장하기
         for (Song artist : playList ){
             uniqueArtists.add(artist.getArtist());
         }
-        // set 자료구조에 있는 artist 들을 모두 출력 ?
+        // set 자료구조에 있는 artist 들을 모두 출력
         int index = 1;
         for (String artist : uniqueArtists){
             System.out.print(index+". ");
@@ -54,13 +63,43 @@ public class MakeList extends SongList {
         }
     }
 
-    public void showPlayListByArtist (int number){
-        // 입력받은 번호의 가수명을 가져와서
-        // 가수명이 일치하는 노래의 리스트를 생성
-        System.out.println(number + "가수를 선택하셨습니다.");
-        System.out.println("=========================");
-        System.out.println(number + "가수의 노래 리스트");
-        System.out.println("=========================");
+    // 가수별 노래 리스트 생성하기
+    public void makePlayListByArtist (int number){
+        // uniqueArtists 가 빈 Set 로 반환되므로 showArtists(); 를 호출해서 업데이트
+        showArtists();
+        // 가수명 찾기위해서 Set 을 List 로 변환 -> get 을 사용하기 위해서
+        List<String> artistList = new ArrayList<>(uniqueArtists);
 
-    }
-}
+        // 번호와 일치하는 가수명 찾기
+        String selectedArtist;
+        if (number > 0 && number <= artistList.size()) {
+            selectedArtist = artistList.get(number-1);
+        } else {
+            System.out.println(number+"는 유효하지 않은 번호입니다.");
+            System.out.println("1부터 "+artistList.size()+"사이의 숫자 중 입력해주세요.");
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("가수를 선택해주세요: ");
+            System.out.println("=========================");
+            MakeList artists = new MakeList();
+            artists.showArtists();
+            System.out.println("=========================");
+            System.out.print("입력 : ");
+            int newNumber = scanner.nextInt();
+
+            // 재귀
+            makePlayListByArtist(newNumber);
+            return;
+        }
+
+        // 가수의 노래 리스트를 생성
+        System.out.println(selectedArtist + "를 선택하셨습니다.");
+        System.out.println(selectedArtist + "의 플레이리스트는 아래와 같습니다.");
+        System.out.println("=========================");
+        newPlayList = Arrays.stream(playList)
+                .filter(song -> song.getArtist().equals(selectedArtist))
+                .map(song ->  song.getId() + ". " + song.getArtist() + " - " + song.getTitle())
+                .collect(Collectors.toList());
+        showPlayList();
+        System.out.println("=========================");
+}}

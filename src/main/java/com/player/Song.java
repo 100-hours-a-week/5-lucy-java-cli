@@ -1,18 +1,17 @@
 package com.player;
 
+// 개별 노래 정보를 관리하는 클래스
 public class Song {
     // 속성
     private int id;
     private String artist;
     private String title;
-    private String lyrics;
 
     // 생성자
-    public Song(int id, String artist, String title, String lyrics) {
+    public Song(int id, String artist, String title) {
         this.id = id;
         this.artist = artist;
         this.title = title;
-        this.lyrics = lyrics;
     }
 
     // setter
@@ -28,9 +27,6 @@ public class Song {
         this.title = title;
     }
 
-    public void setLyrics(String lyrics) {
-        this.lyrics = lyrics;
-    }
 
     // getter
     public int getId() {
@@ -43,9 +39,5 @@ public class Song {
 
     public String getTitle() {
         return title;
-    }
-
-    public String getLyrics() {
-        return lyrics;
     }
 }
