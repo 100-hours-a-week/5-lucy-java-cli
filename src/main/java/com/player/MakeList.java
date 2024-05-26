@@ -16,21 +16,35 @@ public class MakeList extends SongList {
     protected List<String> newPlayList = new ArrayList<>();
 
     public MakeList() {
+
     }
 
     // 플레이리스트 출력
     public void showPlayList(){
+        // newPlayList의 song 요소들을 반복 출력
         for (String song : newPlayList) {
             System.out.println(song);
         }
     }
+
+    public void showArtistList(){
+        // set 자료구조에 있는 artist 들을 모두 출력
+        int index = 1;
+        for (String artist : uniqueArtists){
+            System.out.print(index+". ");
+            System.out.println(artist);
+            index++;
+        }
+    }
+
+    // ------------------ 리스트 만들기 메소드들 -------------------------
 
     public void makePlayListAll (){
         // newPlayList 에 전곡 담기
         newPlayList = Arrays.stream(playList)
                 .map(song -> song.getId() + ". " + song.getArtist() + " - " + song.getTitle())
                 .collect(Collectors.toList());
-        // newPlayList 출력
+        // PlayList 출력
         showPlayList();
     }
 
@@ -49,45 +63,58 @@ public class MakeList extends SongList {
     }
 
     // 가수 리스트 생성하기
-    public void showArtists (){
+    public void makeArtistList (){
         // playList 배열에서 가수 정보만 추출해서 Set에 저장하기
         for (Song artist : playList ){
             uniqueArtists.add(artist.getArtist());
-        }
-        // set 자료구조에 있는 artist 들을 모두 출력
-        int index = 1;
-        for (String artist : uniqueArtists){
-            System.out.print(index+". ");
-            System.out.println(artist);
-            index++;
         }
     }
 
     // 가수별 노래 리스트 생성하기
     public void makePlayListByArtist (int number){
-        // uniqueArtists 가 빈 Set 로 반환되므로 showArtists(); 를 호출해서 업데이트
-        showArtists();
+        // uniqueArtists 가 빈 Set 로 반환되므로 makeArtists(); 를 호출해서 업데이트
+        makeArtistList();
         // 가수명 찾기위해서 Set 을 List 로 변환 -> get 을 사용하기 위해서
         List<String> artistList = new ArrayList<>(uniqueArtists);
 
         // 번호와 일치하는 가수명 찾기
         String selectedArtist;
+        // 매개변수로 받은 숫자 입력값이 범위 안에 있으면 selectedArtist값 할당
         if (number > 0 && number <= artistList.size()) {
             selectedArtist = artistList.get(number-1);
+
         } else {
             System.out.println(number+"는 유효하지 않은 번호입니다.");
             System.out.println("1부터 "+artistList.size()+"사이의 숫자 중 입력해주세요.");
 
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("가수를 선택해주세요: ");
-            System.out.println("=========================");
-            MakeList artists = new MakeList();
-            artists.showArtists();
-            System.out.println("=========================");
-            System.out.print("입력 : ");
-            int newNumber = scanner.nextInt();
+            // 가수 선택부터 다시 출력
+            // WayToPlay 클래스의 SelectPlayWay()의 case3으로 돌아가기
+            // SelectArtist() 메서드로 분리해서 리팩토링
+//            System.out.println("가수를 선택해주세요: ");
+//            System.out.println("=========================");
+//            MakeList artists = new MakeList();
+//            artists.makeArtistList();
+//            artists.showArtistList();
+//            System.out.println("=========================");
+//            System.out.print("입력 : ");
 
-            // 재귀
+//            // 초기화
+////            Main.in.nextLine();
+//            int newNumber = 0;
+//
+//            try {
+//                newNumber = Main.in.nextInt();
+//            } catch (InputMismatchException e){
+//                System.out.println("숫자로 입력해주세요");
+////                Main.in.nextLine();
+//            } catch (Exception e) {
+//                System.out.println("헉, 예기치 못한 오류가 발생했어요");
+//                System.out.println("프로그램을 다시 시작해주세요.");
+//            }
+
+//            // 재귀의 이유 ?
+            WayToPlay reSelect = new WayToPlay();
+            int newNumber = reSelect.SelectAritst();
             makePlayListByArtist(newNumber);
             return;
         }
@@ -100,6 +127,5 @@ public class MakeList extends SongList {
                 .filter(song -> song.getArtist().equals(selectedArtist))
                 .map(song ->  song.getId() + ". " + song.getArtist() + " - " + song.getTitle())
                 .collect(Collectors.toList());
-        showPlayList();
-        System.out.println("=========================");
 }}
+

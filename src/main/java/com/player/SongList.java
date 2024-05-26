@@ -1,9 +1,11 @@
 package com.player;
-import java.util.Set;
-import java.util.HashSet;
+
+import java.util.Arrays;
 
 public class SongList{
-    public SongList() {}
+    public SongList() {
+    }
+
     // 배열 선언
     // 1. 클래스명 배열명 [] = new 클래스명 [배열 크기];
     // 2. 선언과 동시에 할당 및 초기화
@@ -21,5 +23,9 @@ public class SongList{
             new Song(8, "터치드", "좋지 아니한가"),
             new Song(9, "루시", "Boogie Man"),
             new Song(10, "데이식스", "좋아합니다"),
+            new Song(11, "터치드", "Highlight"),
+            new Song(12, "터치드", "Hi Bully"),
+            new Song(13, "루시", "맞네"),
+            new Song(14, "터치드", "Alive")
     };
 }
