@@ -20,7 +20,7 @@ public class WayToPlay {
     static WayToPlay method2 = new WayToPlay(2, "플레이 리스트 5곡 랜덤 생성하기");
     static WayToPlay method3 = new WayToPlay(3, "가수별 리스트 생성하기");
 
-    // 객체 생성 없이 사용하기 위해 static 을 붙였었음.
+    // 객체 생성 없이 사용하기 위해 static 을 붙였었음. [수정 완료]
     public void AskNewPlayList(){
         System.out.println("새로운 리스트를 생성하시겠습니까 ? (Y / N)");
         try {
@@ -65,6 +65,7 @@ public class WayToPlay {
                     // 모든 노래 리스트 출력
                     MakeList playAll = new MakeList();
                     playAll.makePlayListAll();
+                    playAll.showPlayList();
                     System.out.println("=========================");
                     AskNewPlayList();
                     break;
@@ -75,23 +76,15 @@ public class WayToPlay {
                     // 랜덤 5곡 리스트 출력
                     MakeList random5play = new MakeList();
                     random5play.makePlayListRandom();
+                    random5play.showPlayList();
                     System.out.println("=========================");
                     AskNewPlayList();
                     break;
                 case 3:
                     System.out.println(method3.name+ "를 선택하셨습니다.");
-//                    System.out.println("가수를 선택해주세요.");
-//                    System.out.println("=========================");
-//                    // 가수 리스트 출력
-//                    MakeList artists = new MakeList();
-//                    artists.makeArtistList();
-//                    artists.showArtistList();
-//                    System.out.println("=========================");
+
                     // 가수를 선택해주세요 -> input 값을 리턴 -> artistAnswer 값
                     int artistAnswer = SelectAritst();
-                    if (artistAnswer == 0){
-                        SelectAritst();
-                    } else {
                     // 입력한 가수의 노래 리스트 출력
                     MakeList artistSong = new MakeList();
                     artistSong.makePlayListByArtist(artistAnswer);
@@ -99,7 +92,6 @@ public class WayToPlay {
                     System.out.println("=========================");
                     AskNewPlayList();
                     break;
-                    }
                 default:
                     // 플레이 방법 선택번호 범위
                     System.out.println("1,2,3번 중에 선택해주세요");
@@ -116,7 +108,7 @@ public class WayToPlay {
         }
         }
 
-    public int SelectAritst (){
+    public int SelectAritst () {
 
         System.out.println("가수를 선택해주세요.");
         System.out.println("=========================");
@@ -131,10 +123,10 @@ public class WayToPlay {
             // 가수 번호 입력
             int artistAnswer = Main.in.nextInt();
             return artistAnswer;
-            } catch (InputMismatchException e){
-                System.out.println("숫자를 입력해주세요!");
-                Main.in.nextLine();
-                return SelectAritst();
-            }
+        } catch (InputMismatchException e) {
+            System.out.println("숫자를 입력해주세요!");
+            Main.in.nextLine();
+            return SelectAritst();
+        }
     }
 }

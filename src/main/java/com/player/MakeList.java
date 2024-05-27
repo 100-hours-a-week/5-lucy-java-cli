@@ -44,8 +44,6 @@ public class MakeList extends SongList {
         newPlayList = Arrays.stream(playList)
                 .map(song -> song.getId() + ". " + song.getArtist() + " - " + song.getTitle())
                 .collect(Collectors.toList());
-        // PlayList 출력
-        showPlayList();
     }
 
     public void makePlayListRandom(){
@@ -58,8 +56,6 @@ public class MakeList extends SongList {
                 .limit(5)
                 .map(song -> song.getId() + ". " + song.getArtist() + " - " + song.getTitle())
                 .collect(Collectors.toList());
-
-        showPlayList();
     }
 
     // 가수 리스트 생성하기
@@ -79,45 +75,18 @@ public class MakeList extends SongList {
 
         // 번호와 일치하는 가수명 찾기
         String selectedArtist;
+        while (true){
         // 매개변수로 받은 숫자 입력값이 범위 안에 있으면 selectedArtist값 할당
         if (number > 0 && number <= artistList.size()) {
             selectedArtist = artistList.get(number-1);
-
+            break;
         } else {
             System.out.println(number+"는 유효하지 않은 번호입니다.");
             System.out.println("1부터 "+artistList.size()+"사이의 숫자 중 입력해주세요.");
 
-            // 가수 선택부터 다시 출력
-            // WayToPlay 클래스의 SelectPlayWay()의 case3으로 돌아가기
-            // SelectArtist() 메서드로 분리해서 리팩토링
-//            System.out.println("가수를 선택해주세요: ");
-//            System.out.println("=========================");
-//            MakeList artists = new MakeList();
-//            artists.makeArtistList();
-//            artists.showArtistList();
-//            System.out.println("=========================");
-//            System.out.print("입력 : ");
-
-//            // 초기화
-////            Main.in.nextLine();
-//            int newNumber = 0;
-//
-//            try {
-//                newNumber = Main.in.nextInt();
-//            } catch (InputMismatchException e){
-//                System.out.println("숫자로 입력해주세요");
-////                Main.in.nextLine();
-//            } catch (Exception e) {
-//                System.out.println("헉, 예기치 못한 오류가 발생했어요");
-//                System.out.println("프로그램을 다시 시작해주세요.");
-//            }
-
-//            // 재귀의 이유 ?
             WayToPlay reSelect = new WayToPlay();
-            int newNumber = reSelect.SelectAritst();
-            makePlayListByArtist(newNumber);
-            return;
-        }
+            number = reSelect.SelectAritst();
+        }}
 
         // 가수의 노래 리스트를 생성
         System.out.println(selectedArtist + "를 선택하셨습니다.");
