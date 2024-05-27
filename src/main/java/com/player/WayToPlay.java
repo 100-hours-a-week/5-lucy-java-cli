@@ -20,6 +20,30 @@ public class WayToPlay {
     static WayToPlay method2 = new WayToPlay(2, "플레이 리스트 5곡 랜덤 생성하기");
     static WayToPlay method3 = new WayToPlay(3, "가수별 리스트 생성하기");
 
+    public void AskPlayThis(MakeList makeList){
+        System.out.println("플레이리스트를 재생하시겠습니까 ? (Y / N)");
+        try {
+            String answer = Main.in.next();
+            switch (answer) {
+                case "Y", "y":
+                    // 노래 재생하는 화면 보여주기
+                    IsPlaying isPlaying = new IsPlaying(makeList);
+                    isPlaying.printSong();
+                    break;
+                case "N", "n":
+                    // 새로운 리스트 생성 여부 확인
+                    AskNewPlayList();
+                    break;
+                default:
+                    System.out.println("Y 또는 N을 입력해주세요");
+                    AskPlayThis(makeList);
+            }
+        } catch (Exception e) {
+            System.out.println("헉, 예기치 못한 오류가 발생했어요");
+            System.out.println("프로그램을 다시 시작해주세요.");
+        }
+    }
+
     // 객체 생성 없이 사용하기 위해 static 을 붙였었음. [수정 완료]
     public void AskNewPlayList(){
         System.out.println("새로운 리스트를 생성하시겠습니까 ? (Y / N)");
@@ -67,7 +91,8 @@ public class WayToPlay {
                     playAll.makePlayListAll();
                     playAll.showPlayList();
                     System.out.println("=========================");
-                    AskNewPlayList();
+                    AskPlayThis(playAll);
+//                    AskNewPlayList();
                     break;
                 case 2:
                     System.out.println(method2.name+ "를 선택하셨습니다.");
@@ -78,7 +103,8 @@ public class WayToPlay {
                     random5play.makePlayListRandom();
                     random5play.showPlayList();
                     System.out.println("=========================");
-                    AskNewPlayList();
+                    AskPlayThis(random5play);
+//                    AskNewPlayList();
                     break;
                 case 3:
                     System.out.println(method3.name+ "를 선택하셨습니다.");
@@ -90,7 +116,8 @@ public class WayToPlay {
                     artistSong.makePlayListByArtist(artistAnswer);
                     artistSong.showPlayList();
                     System.out.println("=========================");
-                    AskNewPlayList();
+                    AskPlayThis(artistSong);
+//                    AskNewPlayList();
                     break;
                 default:
                     // 플레이 방법 선택번호 범위

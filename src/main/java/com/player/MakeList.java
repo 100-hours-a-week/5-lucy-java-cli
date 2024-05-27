@@ -19,6 +19,11 @@ public class MakeList extends SongList {
 
     }
 
+    // 리스트 getter
+    public List<String> getNewPlayList() {
+        return newPlayList;
+    }
+
     // 플레이리스트 출력
     public void showPlayList(){
         // newPlayList의 song 요소들을 반복 출력

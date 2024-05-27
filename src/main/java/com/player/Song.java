@@ -14,6 +14,7 @@ public class Song {
         this.title = title;
     }
 
+
     // setter
     public void setId(int id) {
         this.id = id;
@@ -27,7 +28,6 @@ public class Song {
         this.title = title;
     }
 
-
     // getter
     public int getId() {
         return id;
@@ -40,4 +40,5 @@ public class Song {
     public String getTitle() {
         return title;
     }
+
 }
