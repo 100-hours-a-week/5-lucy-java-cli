@@ -1,49 +1,39 @@
 package com.player;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class IsPlaying extends MakeList {
-    // 매개 변수로 받은 리스트 목록을 담을 빈 리스트 생성
+public class IsPlaying {
+    // 매개 변수로 받은 리스트 목록을 담을 빈 리스트
     private List<String> playingList;
+    // true 일 때, 가사를 출력하고, false 일 때, 가사출력을 멈춘다.
+    private volatile boolean isPlay = true;
 
+    // 생성자
     public IsPlaying(MakeList makeList) {
         // 빈 리스트에 업데이트
         this.playingList = new ArrayList<>(makeList.getNewPlayList());
     }
 
-    public void printSong() {
-//        // 리스트 잘 담기는지 확인
-//        for (String song : playingList) {
-//            System.out.println(song);
-//        }
-
-        // 배열의 첫 번째 노래의 가사부터 출력
-        String fileName = playingList.getFirst()+".txt";
-        Path filePath = Paths.get("src", "main", "resources", "Text", fileName);
-
-        try {
-            List<String> lyrics = Files.readAllLines(filePath);
-
-            System.out.println("[현재곡] " + playingList.getFirst() + " 재생 중...");
-            System.out.println("메뉴를 확인하시려면 [메뉴]를 입력해주세요");
-            // 가사 한줄씩 출력...하는 스레드 추가... 어케함
-            for(String line : lyrics) {
-                System.out.println(line);
-
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("파일이 없어요!");
-        } catch (IOException e){
-            System.out.println("파일을 읽는 중 오류가 발생했습니다.");
-        }
-
+    // getter
+    public boolean getPlay() {
+        return isPlay;
+    }
+    // setter
+    public void setPlay(boolean play) {
+        isPlay = play;
     }
 
-
+    // 재생하기 메서드
+    public void printSong() {
+        // 가사 출력 스레드 : 노래 플레이 리스트와, 공유 객체를 매개 변수로 받음
+        ShowLyric showLyric = new ShowLyric(playingList, this);
+        // 스레드 실행
+        Thread lyric = new Thread(showLyric);
+        lyric.start();
+        try {
+            lyric.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
