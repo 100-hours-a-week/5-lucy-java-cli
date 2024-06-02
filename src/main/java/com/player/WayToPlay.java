@@ -33,7 +33,7 @@ public class WayToPlay {
                 case "Y", "y":
                     // 노래 가사를 출력할 스레드를 실행하는 공유 객체
                     IsPlaying isPlaying = new IsPlaying(makeList);
-                    isPlaying.printSong();
+                    isPlaying.printMusic();
                     answerValid = true;
                     break;
                 case "N", "n":
