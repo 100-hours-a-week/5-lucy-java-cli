@@ -11,7 +11,7 @@ import java.util.*;
 public class IsPlaying {
     // 매개 변수로 받은 리스트 목록을 담을 빈 리스트
     private List<String> playingList;
-    // true 일 때, 가사를 출력하고, false 일 때, 가사출력을 멈춘다. : flag 설정
+    // flag 설정
     private boolean running = true;
     private int musicIndex;
 
@@ -43,7 +43,7 @@ public class IsPlaying {
     public void printMusic(){
         // musicList 있는 노래를 다 출력할 때까지 반복
         while (musicIndex < playingList.size()){
-            // 공유 객체에 하나의 스레드만 접근 가능하도록 synchronized 블록 생성
+            // 하나의 스레드만 접근 가능하도록 synchronized 블록 생성
             synchronized (this){
                 // flag가 true라면 노래 가사 출력
                 if(getRunning()){
@@ -65,22 +65,14 @@ public class IsPlaying {
                         print.start();
 
                         try {
-                            // menu.join 하면, 데드락 된다.
-                            // menu.join();
-                            // print.join 하지 않으면, 리스트에 있는 모든 곡이 한 번에 출력된다.
+                            menu.join();
                             print.join();
+
                         } catch (InterruptedException e){
                             System.out.println("interruptedException!");
                         }
                     } catch (IOException e) {
                         System.out.println("노래 가사 파일을 읽는 중 오류가 발생했습니다: " + e.getMessage());
-                    }
-                    // flag 가 false 이면 현재 스레드 대기
-                } else {
-                    try {
-                        this.wait();
-                    } catch (InterruptedException e) {
-                        System.out.println("interruptedException!");
                     }
                 }
             }

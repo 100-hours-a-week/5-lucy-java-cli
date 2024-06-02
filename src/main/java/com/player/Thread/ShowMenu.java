@@ -44,16 +44,14 @@ class ShowMenu implements Runnable {
             try {
                 System.out.print("입력 : ");
                 answer = Main.in.nextInt();
+                // 업데이트된 index값 호출
                 musicIndex = isPlaying.getMusicIndex();
             switch (answer) {
                 case 1:
                     // musicIndex-1 : 처음 곡 예외처리
                     if (musicIndex > 0) {
-                        synchronized (isPlaying) {
-                            isPlaying.setMusicIndex(musicIndex - 1);
-                            isPlaying.setRunning(true);
-                            isPlaying.notify(); // ShowLyric 스레드 재개
-                        }
+                        isPlaying.setMusicIndex(musicIndex - 1);
+                        isPlaying.setRunning(true);
                         answerValid = true;
                         break;
                     } else {
@@ -64,11 +62,8 @@ class ShowMenu implements Runnable {
                 case 2:
                     // musicIndex+1 : 마지막 곡 예외처리
                     if (musicIndex < printList.size()-1) {
-                        synchronized (isPlaying) {
-                            isPlaying.setMusicIndex(musicIndex + 1);
-                            isPlaying.setRunning(true);
-                            isPlaying.notify(); //ShowLyric 스레드 재개
-                        }
+                        isPlaying.setMusicIndex(musicIndex + 1);
+                        isPlaying.setRunning(true);
                         answerValid = true;
                         break;
                     } else {
@@ -79,7 +74,6 @@ class ShowMenu implements Runnable {
                 case 3:
                     Screen screen = new Screen();
                     screen.showIntro();
-                    answerValid = true;
                     break;
                 default:
                     System.out.println("1부터 4 사이의 숫자를 입력해주세요!");
