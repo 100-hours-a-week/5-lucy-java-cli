@@ -8,7 +8,7 @@ public class IsPlaying {
     // 매개 변수로 받은 리스트 목록을 담을 빈 리스트
     private List<String> playingList;
     // true 일 때, 가사를 출력하고, false 일 때, 가사출력을 멈춘다. : flag 설정
-    private volatile boolean running = true;
+    private boolean running = true;
     private int MusicIndex;
 
     // 생성자
