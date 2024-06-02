@@ -21,7 +21,7 @@ class ShowMenu implements Runnable {
     public void run() {
         try {
             // 10초 대기
-            Thread.sleep(5000);
+            Thread.sleep(15000);
             // flag 를 false 로 변경
             isPlaying.setRunning(false);
             // 안내문구 출력

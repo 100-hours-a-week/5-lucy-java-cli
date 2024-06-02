@@ -43,10 +43,8 @@ public class IsPlaying {
     public void printMusic(){
         // musicList 있는 노래를 다 출력할 때까지 반복
         while (musicIndex < playingList.size()){
-            // 하나의 스레드만 접근 가능하도록 synchronized 블록 생성
-            synchronized (this){
                 // flag가 true라면 노래 가사 출력
-                if(getRunning()){
+                if(running){
                     String fileName = playingList.get(musicIndex)+".txt";
                     Path filePath = Paths.get("src", "main", "resources", "Text", fileName);
                     try {
@@ -64,18 +62,15 @@ public class IsPlaying {
                         Thread print = new Thread(showLyrics);
                         print.start();
 
-                        try {
-                            menu.join();
-                            print.join();
+                        menu.join();
+                        print.join();
 
-                        } catch (InterruptedException e){
-                            System.out.println("interruptedException!");
-                        }
                     } catch (IOException e) {
                         System.out.println("노래 가사 파일을 읽는 중 오류가 발생했습니다: " + e.getMessage());
+                    } catch (InterruptedException e){
+                        System.out.println("interruptedException!");
                     }
                 }
             }
         }
     }
-}
