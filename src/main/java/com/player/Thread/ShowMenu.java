@@ -8,8 +8,8 @@ import java.util.List;
 
 class ShowMenu implements Runnable {
     // 공유 객체
-    private IsPlaying isPlaying;
-    private List<String> printList;
+    private final IsPlaying isPlaying;
+    private final List<String> printList;
     int musicIndex;
 
     // 생성자
@@ -22,8 +22,7 @@ class ShowMenu implements Runnable {
         try {
             // 10초 대기
             Thread.sleep(5000);
-
-            // flag를 false로 변경
+            // flag 를 false 로 변경
             isPlaying.setRunning(false);
             // 안내문구 출력
             System.out.println("===============================");
@@ -34,7 +33,7 @@ class ShowMenu implements Runnable {
             System.out.println("오류 발생!" + e);
         }
 
-        int answer = -1;
+        int answer;
         boolean answerValid = false;
 
         System.out.println("1. 이전 곡 재생하기");
@@ -48,7 +47,7 @@ class ShowMenu implements Runnable {
                 musicIndex = isPlaying.getMusicIndex();
             switch (answer) {
                 case 1:
-                    // SongIndex-1 : 처음 곡 예외처리
+                    // musicIndex-1 : 처음 곡 예외처리
                     if (musicIndex > 0) {
                         synchronized (isPlaying) {
                             isPlaying.setMusicIndex(musicIndex - 1);
@@ -63,7 +62,7 @@ class ShowMenu implements Runnable {
                     }
                     break;
                 case 2:
-                    // SongIndex+1 : 마지막 곡 예외처리
+                    // musicIndex+1 : 마지막 곡 예외처리
                     if (musicIndex < printList.size()-1) {
                         synchronized (isPlaying) {
                             isPlaying.setMusicIndex(musicIndex + 1);
@@ -85,7 +84,6 @@ class ShowMenu implements Runnable {
                 default:
                     System.out.println("1부터 4 사이의 숫자를 입력해주세요!");
                     Main.in.nextLine();
-
             }} catch (InputMismatchException e) {
                 System.out.println("숫자로 입력해주세요!");
                 Main.in.nextLine();

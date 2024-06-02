@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 class PlayMusic implements Runnable {
     private IsPlaying isPlaying;
@@ -21,6 +22,7 @@ class PlayMusic implements Runnable {
     public void run(){
         // musicList 있는 노래를 다 출력할 때까지 반복
         while (musicIndex < musicList.size()){
+
             // 공유 객체에 하나의 스레드만 접근 가능하도록 synchronized 블록 생성
             synchronized (isPlaying){
                 // 공유 객체에 있는 노래 index 값 가져오기
@@ -45,17 +47,17 @@ class PlayMusic implements Runnable {
                     print.start();
 
                     try {
-                        // 기다리면, 다음 곡 출력으로 넘어가지 않는다...
+                        // menu.join 하면, 데드락 된다.
                         // menu.join();
-                        // 기다리지 않으면, 5곡이 한 번에 출력된다...
-                        print.join();
+                        // print.join 하지 않으면, 리스트에 있는 모든 곡이 한 번에 출력된다.
+                         print.join();
                     } catch (InterruptedException e){
                         System.out.println("interruptedException!");
                     }
                 } catch (IOException e) {
                         System.out.println("노래 가사 파일을 읽는 중 오류가 발생했습니다: " + e.getMessage());
                 }
-                // flag가 false이면
+                // flag 가 false 이면 현재 스레드 대기 상태로
                 } else {
                     try {
                         // 현재 쓰레드(PlayMusic)는 isPlaying에 대한 락을 해제

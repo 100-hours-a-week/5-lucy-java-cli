@@ -23,7 +23,7 @@ public class IsPlaying {
     }
     // flag setter
     public void setRunning(boolean running) {
-        running = running;
+        this.running = running;
     }
 
     // 노래 index getter
