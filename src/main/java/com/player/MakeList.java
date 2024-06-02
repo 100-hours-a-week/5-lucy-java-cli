@@ -15,11 +15,7 @@ public class MakeList extends SongList {
     // 플레이리스트를 담을 빈 리스트 생성
     protected List<String> newPlayList = new ArrayList<>();
 
-    public MakeList() {
-
-    }
-
-    // 리스트 getter
+    //플레이 리스트 getter
     public List<String> getNewPlayList() {
         return newPlayList;
     }
@@ -46,6 +42,7 @@ public class MakeList extends SongList {
 
     public void makePlayListAll (){
         // newPlayList 에 전곡 담기
+        // "0. artist - title" 형태로 담기
         newPlayList = Arrays.stream(playList)
                 .map(song -> song.getId() + ". " + song.getArtist() + " - " + song.getTitle())
                 .collect(Collectors.toList());

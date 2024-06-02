@@ -26,6 +26,9 @@ public class SongList{
             new Song(11, "터치드", "Highlight"),
             new Song(12, "터치드", "Hi Bully"),
             new Song(13, "루시", "맞네"),
-            new Song(14, "터치드", "Alive")
+            new Song(14, "터치드", "Alive"),
+            new Song(15, "뉴진스", "How sweet"),
+            new Song(16, "뉴진스", "Attention"),
+            new Song(17, "뉴진스", "Ditto"),
     };
 }
